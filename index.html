@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Special Someone ❤️</title>
     <style>
+        /* ... Previous styles remain the same ... */
         body {
             font-family: 'Arial', sans-serif;
             display: flex;
@@ -75,6 +76,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            z-index: 1;
         }
 
         .btn:before {
@@ -119,10 +121,15 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            height: 200px;
+            width: 200px;
+            margin: 20px auto;
         }
 
         .gif-container img {
-            max-width: 200px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             border-radius: 10px;
         }
 
@@ -182,6 +189,13 @@
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
+
+        .response-text {
+            color: #ff4d4d;
+            font-size: 1.2em;
+            margin: 20px 0;
+            animation: fadeIn 0.5s ease-in;
+        }
     </style>
 </head>
 <body>
@@ -190,7 +204,7 @@
         <div id="content">
             <div class="question">I know you're angry, but can we talk? 🥺</div>
             <div class="gif-container">
-                <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTdudHdlMGcweTZ3eTFmbjdoNWdiNTJ5ejI2YThoczlhM2tlZnZqeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/J9XEvHg6UQyLi4xBfM/giphy.gif" alt="Cute pleading cat" />
+                <img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" alt="Cute pleading cat" />
             </div>
             <div class="buttons">
                 <button id="yesBtn" class="btn">Yes</button>
@@ -204,51 +218,59 @@
         const questions = [
             {
                 question: "I know you're angry, but can we talk? 🥺",
-                gif: "https://media.giphy.com/media/6Uqa3vLCikV1yNRmdU/giphy.gif?cid=790b76118gwtbdeegjlbs92sdku5owv3gzqvdj1rx7wtgve2&ep=v1_gifs_search&rid=giphy.gif&ct=g",
+                gif: "https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif",
                 yesResponse: "Thank you for giving me a chance! ❤️"
             },
             {
                 question: "I'm really sorry for what happened. Can you forgive me?",
-                gif: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjl3MGdmYWlpanBpZHN0aHFicjI4Y2l3cTcwZmhjcXo4dHF0cTQxNSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/lBTpHmb03fo8U/giphy.gif",
+                gif: "https://media.giphy.com/media/qQdL532ZANbjy/giphy.gif",
                 yesResponse: "Your forgiveness means the world to me! 🥰"
             },
             {
                 question: "Do you know how special you are to me?",
-                gif: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTFqMnNuZTd4cGR1YWNyZHpieDR2dXgwcjcwdDd0enZmdnViaTIycCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/1JmGiBtqTuehfYxuy9/giphy.gif",
+                gif: "https://media.giphy.com/media/LuvsSH7vbGeKtZ238M/giphy.gif",
                 yesResponse: "You're my everything! 💝"
             },
             {
                 question: "Can I make it up to you with a special date?",
-                gif: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXV5ejgzNnM0NndyMnZ1aWR5aHdmdTgwYW0za3lqNGs1em8zdnl1aSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/hX3fhNF2UzCyOIbQKK/giphy.gif",
+                gif: "https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif",
                 yesResponse: "I promise to make it unforgettable! 💑"
             },
             {
                 question: "Will you let me show you how much I care?",
-                gif: "https://media.giphy.com/media/pmA9ptnSv9hx6MwBww/giphy.gif?cid=790b7611nm1kvssiyrg22nxt8x2i4d116534a06l9vy75n87&ep=v1_gifs_search&rid=giphy.gif&ct=g",
+                gif: "https://media.giphy.com/media/108M7gCS1JSoO4/giphy.gif",
                 yesResponse: "I'll prove it every day! 💕"
             },
             {
                 question: "Do you still love me despite my mistakes?",
-                gif: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExc3FiZXZ4aG9zemI2bG9xOWwwOW51eXB0YWlqc3FxZ2t5cWt3eTZhbSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/e1Tf1eOo6976zuGv3C/giphy.gif",
+                gif: "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif",
                 yesResponse: "I love you more than words can say! 💖"
             },
             {
                 question: "Can we start fresh and make new memories?",
-                gif: "https://media.giphy.com/media/UVUslMrgTNHaVu2tOI/giphy.gif?cid=ecf05e47zls5m0s3vt74zmkv1r8trv3af0em7jn7zb218f88&ep=v1_gifs_search&rid=giphy.gif&ct=g",
+                gif: "https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif",
                 yesResponse: "Here's to our new beginning! 🌟"
             },
             {
                 question: "Will you be my Valentine forever?",
-                gif: "https://media.giphy.com/media/zy7rhJ8f8wfaU/giphy.gif?cid=790b7611y4t4ylak5o693hcsk08nu89a2u87vc9tyl5klkvv&ep=v1_gifs_search&rid=giphy.gif&ct=g",
+                gif: "https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif",
                 yesResponse: "You've made me the happiest person alive! 💘"
             }
         ];
 
         let currentQuestion = 0;
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const content = document.getElementById('content');
-        const heartsContainer = document.getElementById('hearts');
+
+        function initializeButtons() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            
+            if (noBtn && yesBtn) {
+                noBtn.addEventListener('mouseover', moveButton);
+                noBtn.addEventListener('click', moveButton);
+                yesBtn.addEventListener('click', handleYesClick);
+                yesBtn.addEventListener('mouseover', createSparkleEffect);
+            }
+        }
 
         function createSparkle(x, y) {
             const sparkle = document.createElement('div');
@@ -260,6 +282,7 @@
         }
 
         function moveButton() {
+            const noBtn = document.getElementById('noBtn');
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             
@@ -267,14 +290,16 @@
             noBtn.style.left = `${x}px`;
             noBtn.style.top = `${y}px`;
 
-            // Create sparkles where the button was
             for (let i = 0; i < 5; i++) {
                 createSparkle(x + Math.random() * noBtn.offsetWidth, y + Math.random() * noBtn.offsetHeight);
             }
         }
 
         function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
             heartsContainer.style.display = 'block';
+            heartsContainer.innerHTML = '';
+            
             for (let i = 0; i < 40; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'heart';
@@ -290,15 +315,34 @@
             }, 4000);
         }
 
-        noBtn.addEventListener('mouseover', moveButton);
-        noBtn.addEventListener('click', moveButton);
+        function createSparkleEffect(e) {
+            const rect = e.target.getBoundingClientRect();
+            for (let i = 0; i < 3; i++) {
+                createSparkle(
+                    rect.left + Math.random() * rect.width,
+                    rect.top + Math.random() * rect.height
+                );
+            }
+        }
 
-        yesBtn.addEventListener('click', () => {
+        function handleYesClick() {
             createHearts();
             
             if (currentQuestion < questions.length - 1) {
-                currentQuestion++;
+                const currentResponse = questions[currentQuestion].yesResponse;
+                const content = document.getElementById('content');
+                
+                // Show current response
+                content.innerHTML = `
+                    <div class="response-text">${currentResponse}</div>
+                    <div class="gif-container">
+                        <img src="${questions[currentQuestion].gif}" alt="Cute animation" />
+                    </div>
+                `;
+                
+                // Move to next question after delay
                 setTimeout(() => {
+                    currentQuestion++;
                     content.innerHTML = `
                         <div class="question">${questions[currentQuestion].question}</div>
                         <div class="gif-container">
@@ -309,35 +353,25 @@
                             <button id="noBtn" class="btn">No</button>
                         </div>
                     `;
-                    
-                    // Reattach event listeners to new buttons
-                    document.getElementById('noBtn').addEventListener('mouseover', moveButton);
-                    document.getElementById('noBtn').addEventListener('click', moveButton);
-                    document.getElementById('yesBtn').addEventListener('click', arguments.callee);
-                }, 1500);
+                    initializeButtons();
+                }, 2000);
             } else {
+                // Final message
+                const content = document.getElementById('content');
                 content.innerHTML = `
                     <div class="final-message">${questions[currentQuestion].yesResponse}</div>
                     <div class="gif-container">
-                        <img src="/api/placeholder/200/200" alt="Happy celebration" />
+                        <img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="Happy celebration" />
                     </div>
                     <div class="question" style="font-size: 1.5em;">
                         Thank you for forgiving me! I promise to always make you happy! 💑💕
                     </div>
                 `;
             }
-        });
+        }
 
-        // Add sparkle effect to yes button
-        yesBtn.addEventListener('mouseover', (e) => {
-            const rect = yesBtn.getBoundingClientRect();
-            for (let i = 0; i < 3; i++) {
-                createSparkle(
-                    rect.left + Math.random() * rect.width,
-                    rect.top + Math.random() * rect.height
-                );
-            }
-        });
+        // Initialize buttons when page loads
+        document.addEventListener('DOMContentLoaded', initializeButtons);
     </script>
 </body>
 </html>
