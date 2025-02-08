@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Special Someone ❤️</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #ffe6e6;
+            text-align: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #ff4d4d;
+            margin-bottom: 30px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .question {
+            font-size: 1.2em;
+            margin: 20px 0;
+            color: #333;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .btn:hover:before {
+            left: 100%;
+        }
+
+        #yesBtn {
+            background-color: #ff4d4d;
+            color: white;
+            transform-origin: center;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 77, 77, 0.5);
+        }
+
+        #noBtn {
+            background-color: #666;
+            color: white;
+            position: relative;
+        }
+
+        .gif-container {
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .gif-container img {
+            max-width: 200px;
+            border-radius: 10px;
+        }
+
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            display: none;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ff4d4d;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: #ffeb3b;
+            pointer-events: none;
+            animation: sparkle 1s linear forwards;
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        .final-message {
+            font-size: 1.5em;
+            color: #ff4d4d;
+            margin: 20px 0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Love ❤️</h1>
+        <div id="content">
+            <div class="question">I know you're angry, but can we talk? 🥺</div>
+            <div class="gif-container">
+                <img src="/api/placeholder/200/200" alt="Cute pleading cat" />
+            </div>
+            <div class="buttons">
+                <button id="yesBtn" class="btn">Yes</button>
+                <button id="noBtn" class="btn">No</button>
+            </div>
+        </div>
+    </div>
+    <div class="hearts" id="hearts"></div>
+
+    <script>
+        const questions = [
+            {
+                question: "I know you're angry, but can we talk? 🥺",
+                gif: "/api/placeholder/200/200",
+                yesResponse: "Thank you for giving me a chance! ❤️"
+            },
+            {
+                question: "I'm really sorry for what happened. Can you forgive me?",
+                gif: "/api/placeholder/200/200",
+                yesResponse: "Your forgiveness means the world to me! 🥰"
+            },
+            {
+                question: "Do you know how special you are to me?",
+                gif: "/api/placeholder/200/200",
+                yesResponse: "You're my everything! 💝"
+            },
+            {
+                question: "Can I make it up to you with a special date?",
+                gif: "/api/placeholder/200/200",
+                yesResponse: "I promise to make it unforgettable! 💑"
+            },
+            {
+                question: "Will you let me show you how much I care?",
+                gif: "/api/placeholder/200/200",
+                yesResponse: "I'll prove it every day! 💕"
+            },
+            {
+                question: "Do you still love me despite my mistakes?",
+                gif: "/api/placeholder/200/200",
+                yesResponse: "I love you more than words can say! 💖"
+            },
+            {
+                question: "Can we start fresh and make new memories?",
+                gif: "/api/placeholder/200/200",
+                yesResponse: "Here's to our new beginning! 🌟"
+            },
+            {
+                question: "Will you be my Valentine forever?",
+                gif: "/api/placeholder/200/200",
+                yesResponse: "You've made me the happiest person alive! 💘"
+            }
+        ];
+
+        let currentQuestion = 0;
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const content = document.getElementById('content');
+        const heartsContainer = document.getElementById('hearts');
+
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 1000);
+        }
+
+        function moveButton() {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+
+            // Create sparkles where the button was
+            for (let i = 0; i < 5; i++) {
+                createSparkle(x + Math.random() * noBtn.offsetWidth, y + Math.random() * noBtn.offsetHeight);
+            }
+        }
+
+        function createHearts() {
+            heartsContainer.style.display = 'block';
+            for (let i = 0; i < 40; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heart.innerHTML = '❤️';
+                heartsContainer.appendChild(heart);
+            }
+
+            setTimeout(() => {
+                heartsContainer.innerHTML = '';
+                heartsContainer.style.display = 'none';
+            }, 4000);
+        }
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('click', moveButton);
+
+        yesBtn.addEventListener('click', () => {
+            createHearts();
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                setTimeout(() => {
+                    content.innerHTML = `
+                        <div class="question">${questions[currentQuestion].question}</div>
+                        <div class="gif-container">
+                            <img src="${questions[currentQuestion].gif}" alt="Cute animation" />
+                        </div>
+                        <div class="buttons">
+                            <button id="yesBtn" class="btn">Yes</button>
+                            <button id="noBtn" class="btn">No</button>
+                        </div>
+                    `;
+                    
+                    // Reattach event listeners to new buttons
+                    document.getElementById('noBtn').addEventListener('mouseover', moveButton);
+                    document.getElementById('noBtn').addEventListener('click', moveButton);
+                    document.getElementById('yesBtn').addEventListener('click', arguments.callee);
+                }, 1500);
+            } else {
+                content.innerHTML = `
+                    <div class="final-message">${questions[currentQuestion].yesResponse}</div>
+                    <div class="gif-container">
+                        <img src="/api/placeholder/200/200" alt="Happy celebration" />
+                    </div>
+                    <div class="question" style="font-size: 1.5em;">
+                        Thank you for forgiving me! I promise to always make you happy! 💑💕
+                    </div>
+                `;
+            }
+        });
+
+        // Add sparkle effect to yes button
+        yesBtn.addEventListener('mouseover', (e) => {
+            const rect = yesBtn.getBoundingClientRect();
+            for (let i = 0; i < 3; i++) {
+                createSparkle(
+                    rect.left + Math.random() * rect.width,
+                    rect.top + Math.random() * rect.height
+                );
+            }
+        });
+    </script>
+</body>
+</html>
