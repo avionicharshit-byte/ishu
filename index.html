@@ -199,18 +199,9 @@
     </style>
 </head>
 <body>
-    <div class="container">
+     <div class="container">
         <h1>My Love ❤️</h1>
-        <div id="content">
-            <div class="question">I know you're angry, but can we talk? 🥺</div>
-            <div class="gif-container">
-                <img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" alt="Cute pleading cat" />
-            </div>
-            <div class="buttons">
-                <button id="yesBtn" class="btn">Yes</button>
-                <button id="noBtn" class="btn">No</button>
-            </div>
-        </div>
+        <div id="content"></div>
     </div>
     <div class="hearts" id="hearts"></div>
 
@@ -260,29 +251,23 @@
 
         let currentQuestion = 0;
 
-        function initializeButtons() {
-            const noBtn = document.getElementById('noBtn');
-            const yesBtn = document.getElementById('yesBtn');
-            
-            if (noBtn && yesBtn) {
-                noBtn.addEventListener('mouseover', moveButton);
-                noBtn.addEventListener('click', moveButton);
-                yesBtn.addEventListener('click', handleYesClick);
-                yesBtn.addEventListener('mouseover', createSparkleEffect);
-            }
+        function displayQuestion(index) {
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="question">${questions[index].question}</div>
+                <div class="gif-container">
+                    <img src="${questions[index].gif}" alt="Cute animation" />
+                </div>
+                <div class="buttons">
+                    <button id="yesBtn" class="btn">Yes</button>
+                    <button id="noBtn" class="btn">No</button>
+                </div>
+            `;
+            initializeButtons();
         }
 
-        function createSparkle(x, y) {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            sparkle.style.left = x + 'px';
-            sparkle.style.top = y + 'px';
-            document.body.appendChild(sparkle);
-            setTimeout(() => sparkle.remove(), 1000);
-        }
-
-        function moveButton() {
-            const noBtn = document.getElementById('noBtn');
+        function moveButton(e) {
+            const noBtn = e.target;
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             
@@ -290,8 +275,19 @@
             noBtn.style.left = `${x}px`;
             noBtn.style.top = `${y}px`;
 
+            createSparkles(x, y, noBtn.offsetWidth, noBtn.offsetHeight);
+            e.preventDefault();
+            return false;
+        }
+
+        function createSparkles(x, y, width, height) {
             for (let i = 0; i < 5; i++) {
-                createSparkle(x + Math.random() * noBtn.offsetWidth, y + Math.random() * noBtn.offsetHeight);
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = (x + Math.random() * width) + 'px';
+                sparkle.style.top = (y + Math.random() * height) + 'px';
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 1000);
             }
         }
 
@@ -315,63 +311,70 @@
             }, 4000);
         }
 
-        function createSparkleEffect(e) {
-            const rect = e.target.getBoundingClientRect();
-            for (let i = 0; i < 3; i++) {
-                createSparkle(
-                    rect.left + Math.random() * rect.width,
-                    rect.top + Math.random() * rect.height
-                );
-            }
+        function showResponse(response) {
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="response-text">${response}</div>
+                <div class="gif-container">
+                    <img src="${questions[currentQuestion].gif}" alt="Cute animation" />
+                </div>
+            `;
+        }
+
+        function showFinalMessage() {
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="final-message">${questions[currentQuestion].yesResponse}</div>
+                <div class="gif-container">
+                    <img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="Happy celebration" />
+                </div>
+                <div class="question" style="font-size: 1.5em;">
+                    Thank you for forgiving me! I promise to always make you happy! 💑💕
+                </div>
+            `;
         }
 
         function handleYesClick() {
             createHearts();
             
             if (currentQuestion < questions.length - 1) {
-                const currentResponse = questions[currentQuestion].yesResponse;
-                const content = document.getElementById('content');
-                
                 // Show current response
-                content.innerHTML = `
-                    <div class="response-text">${currentResponse}</div>
-                    <div class="gif-container">
-                        <img src="${questions[currentQuestion].gif}" alt="Cute animation" />
-                    </div>
-                `;
+                showResponse(questions[currentQuestion].yesResponse);
                 
                 // Move to next question after delay
                 setTimeout(() => {
                     currentQuestion++;
-                    content.innerHTML = `
-                        <div class="question">${questions[currentQuestion].question}</div>
-                        <div class="gif-container">
-                            <img src="${questions[currentQuestion].gif}" alt="Cute animation" />
-                        </div>
-                        <div class="buttons">
-                            <button id="yesBtn" class="btn">Yes</button>
-                            <button id="noBtn" class="btn">No</button>
-                        </div>
-                    `;
-                    initializeButtons();
+                    displayQuestion(currentQuestion);
                 }, 2000);
             } else {
-                // Final message
-                const content = document.getElementById('content');
-                content.innerHTML = `
-                    <div class="final-message">${questions[currentQuestion].yesResponse}</div>
-                    <div class="gif-container">
-                        <img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="Happy celebration" />
-                    </div>
-                    <div class="question" style="font-size: 1.5em;">
-                        Thank you for forgiving me! I promise to always make you happy! 💑💕
-                    </div>
-                `;
+                showFinalMessage();
             }
         }
 
-        // Initialize buttons when page loads
-        document.addEventListener('DOMContentLoaded', initializeButtons);
+        function initializeButtons() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            
+            if (noBtn && yesBtn) {
+                // Remove existing event listeners if any
+                noBtn.replaceWith(noBtn.cloneNode(true));
+                yesBtn.replaceWith(yesBtn.cloneNode(true));
+                
+                // Get the new button references
+                const newNoBtn = document.getElementById('noBtn');
+                const newYesBtn = document.getElementById('yesBtn');
+                
+                // Add event listeners to the new buttons
+                newNoBtn.addEventListener('mouseover', moveButton);
+                newNoBtn.addEventListener('click', moveButton);
+                newYesBtn.addEventListener('click', handleYesClick);
+            }
+        }
+
+        // Start with the first question when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            displayQuestion(0);
+        });
     </script>
 </body>
 </html>
