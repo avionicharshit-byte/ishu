@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Special Someone ❤️</title>
     <style>
-        /* ... Previous styles remain the same ... */
         body {
             font-family: 'Arial', sans-serif;
             display: flex;
@@ -338,10 +337,7 @@
             createHearts();
             
             if (currentQuestion < questions.length - 1) {
-                // Show current response
-                showResponse(questions[currentQuestion].yesResponse);
-                
-                // Move to next question after delay
+                showResponse(questions[currentQuestion].yesResponse);         
                 setTimeout(() => {
                     currentQuestion++;
                     displayQuestion(currentQuestion);
@@ -356,22 +352,18 @@
             const yesBtn = document.getElementById('yesBtn');
             
             if (noBtn && yesBtn) {
-                // Remove existing event listeners if any
                 noBtn.replaceWith(noBtn.cloneNode(true));
                 yesBtn.replaceWith(yesBtn.cloneNode(true));
                 
-                // Get the new button references
                 const newNoBtn = document.getElementById('noBtn');
                 const newYesBtn = document.getElementById('yesBtn');
                 
-                // Add event listeners to the new buttons
                 newNoBtn.addEventListener('mouseover', moveButton);
                 newNoBtn.addEventListener('click', moveButton);
                 newYesBtn.addEventListener('click', handleYesClick);
             }
         }
 
-        // Start with the first question when page loads
         document.addEventListener('DOMContentLoaded', () => {
             displayQuestion(0);
         });
